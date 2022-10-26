@@ -12,6 +12,7 @@ import {
   useRecordContext,
   NumberField,
   EmailField,
+  UrlField,
 } from "react-admin";
 
 const postFilters = [
@@ -24,10 +25,10 @@ export const ParkList = () => (
     <Datagrid rowClick="show">
       <TextField source="id" />
       <TextField source="name" />
-      <EmailField source="email" />
       <NumberField source="photoboxes" />
       <NumberField source="photosTaken" />
-      {/* <ReferenceField source="userId" reference="users" /> */}
+      <EmailField source="email" />
+      <UrlField source="website" />
       <EditButton />
     </Datagrid>
   </List>
@@ -43,6 +44,8 @@ export const ParkEdit = () => (
     <SimpleForm>
       <TextInput source="name" />
       <TextInput source="address" />
+      <TextInput source="email" />
+      <TextInput source="website" />
     </SimpleForm>
   </Edit>
 );

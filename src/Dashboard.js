@@ -1,20 +1,17 @@
-import React from "react";
-import { Card, CardContent, Grid, Typography } from "@mui/material";
+import * as React from "react";
+import { Card, CardContent, CardHeader, Grid, Typography } from "@mui/material";
 import {
   Datagrid,
-  EditButton,
+  Labeled,
   NumberField,
-  ReferenceManyField,
-  ShowBase,
-  TextField,
   Title,
-  useShowController,
+  TextField,
+  UrlField,
+  EmailField,
 } from "react-admin";
-import { Bar } from "react-chartjs-2";
-import "chart.js/auto";
-import { HeroStatCard } from "./HeroStatCard";
-import { ParkInfo } from "./ParkInfo";
 import styled from "@emotion/styled";
+import { HeroStatCard } from "./HeroStatCard";
+import { Bar } from "react-chartjs-2";
 
 const labels = [
   "1",
@@ -77,19 +74,16 @@ const data = {
   ],
 };
 
-export const ParkShow = () => {
+const Dashboard = () => {
   const ref = React.useRef();
-  const { record } = useShowController();
+
   return (
-    <ShowBase>
-      <Title title={record.name} />
+    <StyledDashboard>
+      <Title title="Dashboard" />
+      <Typography variant="h1" sx={{ fontSize: "2rem" }} gutterBottom>
+        Dashboard
+      </Typography>
       <Grid container spacing={4} sx={{ paddingTop: "20px" }}>
-        <Grid item xs={12}>
-          <PageHeader>
-            <EditButton />
-          </PageHeader>
-          <ParkInfo />
-        </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <HeroStatCard title="Total Photos" value={350} />
         </Grid>
@@ -129,7 +123,7 @@ export const ParkShow = () => {
             <CardContent>
               <Typography variant="h4">Total Photos</Typography>
               <Typography variant="caption" gutterBottom>
-                per photobox
+                per park
               </Typography>
               <Bar ref={ref} data={data} />
             </CardContent>
@@ -138,29 +132,48 @@ export const ParkShow = () => {
         <Grid item xs={12}>
           <Card>
             <CardContent>
-              <ReferenceManyField
-                reference="photoboxes"
-                target="parkId"
-                label="Photoboxes"
-              >
-                <Typography variant="h4" gutterBottom>
-                  Photoboxes
-                </Typography>
-                <Datagrid>
-                  <TextField source="id" />
-                  <NumberField source="photosTaken" />
-                </Datagrid>
-              </ReferenceManyField>
+              <Grid container>
+                <Grid item xs={12} sm={6} md={4}>
+                  <Labeled>
+                    <TextField source="parks" />
+                  </Labeled>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <Labeled>
+                    <TextField source="photoboxes" />
+                  </Labeled>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <Labeled>
+                    <TextField source="billing" />
+                  </Labeled>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <Labeled>
+                    <TextField source="address" />
+                  </Labeled>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <Labeled>
+                    <TextField source="phone" />
+                  </Labeled>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <Labeled>
+                    <UrlField source="website" />
+                  </Labeled>
+                </Grid>
+              </Grid>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
-    </ShowBase>
+    </StyledDashboard>
   );
 };
 
-const PageHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+export default Dashboard;
+
+const StyledDashboard = styled.div`
+  margin-top: 20px;
 `;
